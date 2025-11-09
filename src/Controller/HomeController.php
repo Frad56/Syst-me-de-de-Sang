@@ -2,17 +2,20 @@
 
 namespace App\Controller;
 
+use App\Repository\DonateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    #[Route('/donateur', name: 'app_home')]
+    public function index(DonateurRepository $donateurRepository): Response
     {
+        $donateurs= $donateurRepository->findAll();
+
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'donateur_list' => $donateurs,
         ]);
     }
 }
