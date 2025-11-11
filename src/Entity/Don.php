@@ -32,10 +32,10 @@ class Don
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?Donateur $donateurId = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?RendezVous $RendezVous = null;
-
+    #[ORM\ManyToOne(targetEntity: RendezVous::class)]
+    #[ORM\JoinColumn(name: "rendez_vous_id", referencedColumnName: "id", nullable: false)]
+    private ?RendezVous $rendezVous = null;
+    
     
 
     public function getId(): ?int
@@ -117,12 +117,12 @@ class Don
 
     public function getRendezVous(): ?RendezVous
     {
-        return $this->RendezVous;
+        return $this->rendezVous;
     }
 
-    public function setRendezVous(RendezVous $RendezVous): static
+    public function setRendezVous(RendezVous $rendezVous): static
     {
-        $this->RendezVous = $RendezVous;
+        $this->rendezVous = $rendezVous;
 
         return $this;
     }

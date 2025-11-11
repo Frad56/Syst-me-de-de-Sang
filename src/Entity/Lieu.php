@@ -18,7 +18,7 @@ class Lieu
     #[ORM\Column(length: 50)]
     private ?string $nomLieu = null;
 
-    #[ORM\Column(length: 30, nullable: true)]
+    #[ORM\Column(length:255, nullable: true)]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 40, nullable: true)]

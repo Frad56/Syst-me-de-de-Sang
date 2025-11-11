@@ -12,15 +12,23 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use PgSql\Lob;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
 
         $GroupeSanguinPossible = ['A+', 'A-',' B+',' B-', 'AB+', 'AB-', 'O+',' O-'];
         $GroupeSanguin =[];
 
+        $rolesDisponibles = ['ROLE_DONATEUR', 'ROLE_ADMIN'];
         $typeDonListe = ['Sangtotal','plasma','plaquettes'];
 
         $collecteStatut =['lanifiée','Terminée'];
@@ -29,24 +37,36 @@ class AppFixtures extends Fixture
 
         $faker = Factory::create('fr_FR');
         for($i=0; $i <20; $i++){
-         $donateur = new Donateur();
-         $don = new Don();
-         $stock = new Stock();
-         $collecte = new Collecte();
-         $lieu = new Lieu();
-         $rendezVous = new RendezVous();
+          $donateur = new Donateur();
+          $don = new Don();
+          $stock = new Stock();
+          $collecte = new Collecte();
+          $lieu = new Lieu();
+          $rendezVous = new RendezVous();
 
 
          //**************      Don      ***************************** */
+
+         $don->setDonateurId($donateur);
+
+         $don->setRendezVous($rendezVous);
+
+         $rendezVous->setDonateur($donateur);
+         $rendezVous->setCollecte($collecte);
+
+         $collecte->setLieu($lieu);
+         
+
          //date
          $don->setDatedon($faker->dateTime);
          //quantity
          $don-> setQuantite($faker->numberBetween(1,100));
         
-        //type Don
+        //
         $don->setTypeDon($faker -> randomElement($typeDonListe));
         
         //apte
+
         $don ->setApte($faker->boolean());
 
         //Commentaire
@@ -64,9 +84,10 @@ class AppFixtures extends Fixture
          $donateur->setPrenom($faker->lastName());
 
         //password
-        $passwordCreation = $faker->sentence();
-        $password = substr($passwordCreation,0,25);
-        $donateur->setPassword($password);
+        $plainPassword = $faker->password(5, 7); // 
+        //transfer d'une mot claire a une autre hache pour des raison de securites
+        $hashedPassword = $this->passwordHasher->hashPassword($donateur, $plainPassword);
+        $donateur->setPassword($hashedPassword);
 
         //groupe Sanguin 
         $donateur->setGroupeSanguin($faker->randomElement($GroupeSanguinPossible));
@@ -75,7 +96,7 @@ class AppFixtures extends Fixture
         $donateur->setDerniereDateDon($faker->dateTime);
         
         //role de donateur
-        $donateur->setRole(substr($passwordCreation,0,25));
+        $donateur->setRole($faker->randomElement($rolesDisponibles));
 
 /*    **************************     Collect      ******************************** */
 
@@ -138,7 +159,14 @@ class AppFixtures extends Fixture
         'Normal',
         'Alerte',
         'Critique'
+
     ]));
+    $manager->persist($lieu);
+    $manager->persist($collecte);
+    $manager->persist($rendezVous);
+    $manager->persist($don);
+    $manager->persist($donateur);
+    $manager->persist($stock);
     $stock->setDernierMiseAJour($faker->dateTimeThisYear());
       $stock;
         $manager->flush();

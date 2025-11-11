@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Donateurs {% endblock %}
+{% block title %}Liste des Donateurs{% endblock %}
 
 {% block body %}
-{% for donateur in donateur_list %}
-<p> {{ donateur.email}} </p>
-<p> {{ donateur.password}} </p>
-<p> {{ donateur.prenom}} </p>
-
+    {% for donateur in donateur_list %}
+        <p>{{ donateur.email }}</p>
+        <p>{{ donateur.prenom }}</p>
+        <hr>
+    {% endfor %} {# ← BALISE ENDFOR MANQUANTE #}
 {% endblock %}

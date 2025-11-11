@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
 #[ORM\Entity(repositoryClass: DonateurRepository::class)]
-class Donateur
+class Donateur implements   PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -40,19 +42,18 @@ class Donateur
     #[ORM\OneToMany(targetEntity: Don::class, mappedBy: 'donateurId')]
     private Collection $dons;
 
-    #[ORM\OneToOne(mappedBy: 'Rendezvous', cascade: ['persist', 'remove'])]
-    private ?Don $don = null;
+   
 
     /**
      * @var Collection<int, RendezVous>
      */
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'donateur')]
-    private Collection $rendezVouses;
+    private Collection $rendezVouse;
 
     public function __construct()
     {
         $this->dons = new ArrayCollection();
-        $this->rendezVouses = new ArrayCollection();
+        $this->rendezVouse = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,35 +163,21 @@ class Donateur
         return $this;
     }
 
-    public function getDon(): ?Don
-    {
-        return $this->don;
-    }
+   
 
-    public function setDon(Don $don): static
-    {
-        // set the owning side of the relation if necessary
-        //if ($don->getRendezvous() !== $this) {
-          //  $don->setRendezvous($this);
-        // }
-
-        $this->don = $don;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, RendezVous>
      */
     public function getRendezVouses(): Collection
     {
-        return $this->rendezVouses;
+        return $this->rendezVouse;
     }
 
     public function addRendezVouse(RendezVous $rendezVouse): static
     {
-        if (!$this->rendezVouses->contains($rendezVouse)) {
-            $this->rendezVouses->add($rendezVouse);
+        if (!$this->rendezVouse->contains($rendezVouse)) {
+            $this->rendezVouse->add($rendezVouse);
             $rendezVouse->setDonateur($this);
         }
 
@@ -199,7 +186,7 @@ class Donateur
 
     public function removeRendezVouse(RendezVous $rendezVouse): static
     {
-        if ($this->rendezVouses->removeElement($rendezVouse)) {
+        if ($this->rendezVouse->removeElement($rendezVouse)) {
             // set the owning side to null (unless already changed)
             if ($rendezVouse->getDonateur() === $this) {
                 $rendezVouse->setDonateur(null);

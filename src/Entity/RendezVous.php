@@ -23,11 +23,12 @@ class RendezVous
     #[ORM\Column(length: 30)]
     private ?string $statut = null;
 
-    #[ORM\ManyToOne(inversedBy: 'rendezVouses')]
+    #[ORM\ManyToOne(inversedBy: 'rendezVous')]
     private ?Donateur $donateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
     private ?Collecte $collecte = null;
+
 
    
 
@@ -95,5 +96,7 @@ class RendezVous
 
         return $this;
     }
+
+   
 
 }

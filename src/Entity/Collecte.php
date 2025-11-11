@@ -41,6 +41,12 @@ class Collecte
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'collecte')]
     private Collection $rendezVous;
 
+    /**
+     * @var Collection<int, rendezVous>
+     */
+    #[ORM\OneToMany(targetEntity: rendezVous::class, mappedBy: 'listeCollectes')]
+    private Collection $rendez_vous;
+
     public function __construct()
     {
         $this->rendezVous = new ArrayCollection();
