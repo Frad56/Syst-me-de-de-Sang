@@ -144,7 +144,7 @@ class AppFixtures extends Fixture
 
       $rendezVous->setStatut($faker->randomElement($Statut_Renez_Vous));
         $manager->persist($donateur);
-        }
+        
         
       /* *******************************    Stock     *************************************************/  
 
@@ -171,4 +171,5 @@ class AppFixtures extends Fixture
       $stock;
         $manager->flush();
     }
+  }
 }
