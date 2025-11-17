@@ -7,11 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: DonateurRepository::class)]
-class Donateur implements   PasswordAuthenticatedUserInterface
+class Donateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,16 +33,14 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $derniereDateDon = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $role = null;
+    #[ORM\Column(type: 'json')]
+    private array $roles = ['ROLE_DONATEUR'];
 
     /**
      * @var Collection<int, Don>
      */
     #[ORM\OneToMany(targetEntity: Don::class, mappedBy: 'donateurId')]
     private Collection $dons;
-
-   
 
     /**
      * @var Collection<int, RendezVous>
@@ -54,6 +52,28 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     {
         $this->dons = new ArrayCollection();
         $this->rendezVouse = new ArrayCollection();
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER'; // rôle minimum obligatoire
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
     }
 
     public function getId(): ?int
@@ -69,7 +89,6 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -81,7 +100,6 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -93,7 +111,6 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
@@ -105,7 +122,6 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     public function setGroupeSanguin(string $groupeSanguin): static
     {
         $this->groupeSanguin = $groupeSanguin;
-
         return $this;
     }
 
@@ -117,19 +133,6 @@ class Donateur implements   PasswordAuthenticatedUserInterface
     public function setDerniereDateDon(?\DateTime $derniereDateDon): static
     {
         $this->derniereDateDon = $derniereDateDon;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(?string $role): static
-    {
-        $this->role = $role;
-
         return $this;
     }
 
@@ -147,24 +150,18 @@ class Donateur implements   PasswordAuthenticatedUserInterface
             $this->dons->add($don);
             $don->setDonateurId($this);
         }
-
         return $this;
     }
 
     public function removeDon(Don $don): static
     {
         if ($this->dons->removeElement($don)) {
-            // set the owning side to null (unless already changed)
             if ($don->getDonateurId() === $this) {
                 $don->setDonateurId(null);
             }
         }
-
         return $this;
     }
-
-   
-
 
     /**
      * @return Collection<int, RendezVous>
@@ -180,19 +177,16 @@ class Donateur implements   PasswordAuthenticatedUserInterface
             $this->rendezVouse->add($rendezVouse);
             $rendezVouse->setDonateur($this);
         }
-
         return $this;
     }
 
     public function removeRendezVouse(RendezVous $rendezVouse): static
     {
         if ($this->rendezVouse->removeElement($rendezVouse)) {
-            // set the owning side to null (unless already changed)
             if ($rendezVouse->getDonateur() === $this) {
                 $rendezVouse->setDonateur(null);
             }
         }
-
         return $this;
     }
 }

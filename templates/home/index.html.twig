@@ -1,182 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
 
-{% extends 'base.html.twig' %}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-{% block body %}
-    
-    <!-- Hero Section sans Image -->
-    <div class="container-fluid bg-primary py-5 mb-5">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-12 text-center">
-                    <h1 class="display-4 text-white mb-4">Donnez du Sang, Sauvez des Vies</h1>
-                    <p class="text-white mb-4 lead">Rejoignez notre communauté de donateurs et participez à cette noble cause.</p>
-                    <a href="{{ path('app_collectes') }}" class="btn btn-light rounded-pill py-3 px-5 me-3">
-                        <i class="fas fa-search me-2"></i>Voir les Collectes
-                    </a>
-                    {% if not app.user %}
-                        <a href="" class="btn btn-outline-light rounded-pill py-3 px-5">
-                            <i class="fas fa-user-plus me-2"></i>Devenir Donateur
+
+    <!-- website font  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href= "{{ asset('theme/css/swiper.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('theme/css/animate.css')}}"/>
+    <link rel="stylesheet" type="text/css" href=  "{{ asset('theme/css/style.css')}}"
+                                />
+
+    <title>Blood Bank</title>
+</head>
+
+<body>
+
+    <!-- Navbar 1 Start -->
+    <section id="Nav1">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
+                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <i class="fas fa-phone-volume" style="border-right: 1px solid gray;"> +20 127 245 6884
+                                &nbsp; &nbsp; </i>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-envelope" style="padding-left: 15px;"> InfoBloodBank@gmail.com</i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mx-auto order-0 navbar-brand mx-auto">
+                    <a href="https://www.instagram.com/ipda3.tech/"><i
+                            class="fab fa-instagram github">&nbsp;&nbsp;</i></a>
+                    <a href="https://www.facebook.com/ipda3tech/"><i
+                            class="fab fa-facebook-f facebook">&nbsp;&nbsp;</i></a>
+                    <a href="https://twitter.com/ipda3_tech"><i class="fab fa-twitter twitter">&nbsp;&nbsp;</i></a>
+                    <a href="https://api.whatsapp.com/send?phone=+201097571186"><i
+                            class="fab fa-whatsapp whats">&nbsp;&nbsp;</i></a>
+                </div>
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link selected" style="border-right: 1px solid gray;" href="#">EN &nbsp;</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="padding-left: 15px;" href="#">AR</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!-- Navbar 1 End -->
+
+    <!-- Navbar 2 Start -->
+    <section id="Nav2">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <img src="{{ asset ('theme/img/logo.png') }}"  width="18%"></img>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link selected" href= "{{ asset ('theme/index.html') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ asset ('theme/About-us.html') }}" >About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ asset ('theme/requests.html') }}">Donations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ asset ('theme/who-we-are.html') }}" >Who We Are ?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ asset ('theme/contact-us.html') }}" >Contact Us</a>
+                    </li>
+                </ul>
+<button class="btn signup" onclick="window.location.href = '{{ path('app_new_donateur') }}';">New Account</button>            
+    <button class="btn login" onclick= "window.location.href = '{{ path('app_new_donateur') }}';">Login</button>
+            </div>
+        </nav>
+    </section>
+     <img src="{{ asset('theme/img/header2.jpg') }}" class="img-fluid w-100" alt="Header" style="height: 600px; object-fit: cover;">
+        <div style="height: 3cm;"></div>
+     <img src="{{ asset('theme/img/1.jpg') }}" class="img-fluid w-100" alt="Header" style="height: 600px; object-fit: cover;">
+  
+    <!-- Navbar 2 End -->
+
+
+    <!-- Sub Header End -->
+
+    <!-- Articles Start -->
+    <section id="articles">
+        <div class="container">
+            <h2 style="display: inline-block;">Articles</h2>
+            <div class="swiper-container">
+            <div class="button-area" style="display: inline-block; margin-left: 850px;">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </button>
+            </div>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img-top" style="position: relative;">
+                                <img src="{{ asset ('theme/img/p3.jpg') }}" alt="Card image">
+                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Blood Types</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                                    laborum
+                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
+                                    nihil
+                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
+                                <div class="btn-cont">
+                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img-top" style="position: relative;">
+                                <img src="{{ asset ('theme/img/p4.jpg') }}" alt="Card image">
+                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Donations Benefits</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                                    laborum
+                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
+                                    nihil
+                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
+                                <div class="btn-cont">
+                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card ">
+                            <div class="card-img-top" style="position: relative;">
+                                <img src="{{ asset ('theme/img/p1.jpg') }}" alt="Card image">
+                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">Disease Protection</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                                    laborum
+                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
+                                    nihil
+                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
+                                <div class="btn-cont">
+                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card">
+                            <div class="card-img-top" style="position: relative;">
+                                <img src="{{ asset ('theme/img/p5.jpg') }}" alt="Card image">
+                                <button class="like"><i class="fas fa-heart icon-large"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">How To Donate?</h4>
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+                                    laborum
+                                    dolor minus quibusdam sequi asperiores? Fugiat aut consectetur laudantium ea sed
+                                    nihil
+                                    dolore, in mollitia blanditiis, rem omnis recusandae maiores?</p>
+                                <div class="btn-cont">
+                                    <button class="card-btn" onclick= "window.location.href = 'article.html';">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Articles End -->
+
+    <!-- Requests Start -->
+    <section id="requests">
+        <div class="title">
+            <h2>Donations</h2>
+            <hr class="line">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <select name="Type" id="">
+                        <option value="" disabled selected>Select Blood Type</option>
+                        <option value="AB+">AB+</option>
+                        <option value="O">O</option>
+                        <option value="B">B</option>
+                    </select>
+                </div>
+                <div class="col-lg-5">
+                    <select name="City" id="">
+                        <option value="" disabled selected>Select City</option>
+                        <option value="Alexandria">Alexandria</option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Giza">Giza</option>
+                    </select>
+                </div>
+                <div class="search">
+                    <button><i class="col-lg-2 fas fa-search"></i></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="type">
+                                <h2>AB+</h2>
+                            </div>
+                        </div>
+                        <div class="data col-lg-6">
+                            <h4>Name: Ahmed Mohamed</h4>
+                            <h4>Hospital: Andalusia Hospitals</h4>
+                            <h4>City: Cairo</h4>
+                        </div>
+                        <div class="col-lg-3">
+                            <button onclick= "window.location.href = 'theme/donator.html';">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="type">
+                                <h2>AB+</h2>
+                            </div>
+                        </div>
+                        <div class="data col-lg-6">
+                            <h4>Name: Ahmed Mohamed</h4>
+                            <h4>Hospital: Andalusia Hospitals</h4>
+                            <h4>City: Cairo</h4>
+                        </div>
+                        <div class="col-lg-3">
+                            <button onclick= "window.location.href = 'donator.html';">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="type">
+                                <h2>AB+</h2>
+                            </div>
+                        </div>
+                        <div class="data col-lg-6">
+                            <h4>Name: Ahmed Mohamed</h4>
+                            <h4>Hospital: Andalusia Hospitals</h4>
+                            <h4>City: Cairo</h4>
+                        </div>
+                        <div class="col-lg-3">
+                            <button onclick= "window.location.href = 'theme/donator.html';">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="more-req">
+                <button onclick= "window.location.href = 'theme/requests.html';">More</button>
+            </div>
+        </div>
+    </section>
+    <!-- Requests End -->
+
+    <!-- Call us Start -->
+    <section id="call-us">
+        <div class="layer">
+            <div class="container">
+                <h1>Call Us</h1>
+                <h4>You can call us for your inquiries about any information.</h4>
+                <div class="whats">
+                    <img src="{{ asset ('theme/img/whats.png') }}" alt="">
+                    <h3>+20 127 245 6884</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call us End -->
+
+    <!-- App Start -->
+    <section id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="info">
+                        <h1>Blood Bank Application</h1>
+                        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae earum officiis et eligendi nam
+                            harum corporis saepe deserunt.</h3>
+                        <h4>Available On</h4>
+                        <img src="{{ asset ('theme/img/ios.png') }}"  alt="">
+                        <img src="{{ asset ('theme/img/google.png') }}"   alt="">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img class="app-screen" src="{{ asset ('theme/img/App.png') }}"  alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- App End -->
+
+    <!-- Footer Start -->
+    <section id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="foot-info">
+                        <img src="{{ asset ('theme/img/logo.png') }}"  alt="">
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos ut sit natus earum ea cum
+                            doloremque fugit. Sit non ex suscipit fugiat molestias, ipsa rerum tempore voluptates
+                            adipisci rem cum?</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <ul class="menu">
+                        <a href="{{ asset('theme/index.html ')}}" >
+                            <li>Home</li>
                         </a>
-                    {% endif %}
+                        <a href= "{{ asset ('theme/About-us.html') }}" >
+                            <li>About Us</li>
+                        </a>
+                        <a href="#articles" >
+                            <li>Articles</li>
+                        </a>
+                        <a href= "{{ asset ('theme/requests.html') }}">
+                            <li>Donations</li>
+                        </a>
+                        <a href= "{{ asset ('theme/who-we-are.html') }}">
+                            <li>Who We Are?</li>
+                        </a>
+                        <a href= "{{ asset ('theme/contact-us.html') }}">
+                            <li>Contact Us</li>
+                        </a>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="options">
+                        <li>
+                            <h5>Available On</h5>
+                        </li>
+                        <li><img src="{{ asset ('theme/img/ios1.png') }}"  alt=""></li>
+                        <li><img src="{{ asset ('theme/img/google1.png') }}"  alt=""></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- Footer End -->
 
-    <!-- Features Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="feature-item text-center">
-                        <div class="feature-icon bg-primary rounded-circle p-4 mb-4">
-                            <i class="fas fa-heartbeat fa-3x text-white"></i>
-                        </div>
-                        <h4 class="mb-3">Sauvez des Vies</h4>
-                        <p class="mb-0">Un seul don peut sauver jusqu'à 3 vies. Votre geste fait la différence.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="feature-item text-center">
-                        <div class="feature-icon bg-primary rounded-circle p-4 mb-4">
-                            <i class="fas fa-hand-holding-heart fa-3x text-white"></i>
-                        </div>
-                        <h4 class="mb-3">Don Simple</h4>
-                        <p class="mb-0">Le processus de don ne prend que 45 minutes et est sans danger.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="feature-item text-center">
-                        <div class="feature-icon bg-primary rounded-circle p-4 mb-4">
-                            <i class="fas fa-users fa-3x text-white"></i>
-                        </div>
-                        <h4 class="mb-3">Communauté</h4>
-                        <p class="mb-0">Rejoignez une communauté de donateurs engagés pour la cause.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Features End -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script type="text/javascript" src="{{ asset ('theme/js/swiper.min.js') }}"  ></script>
+    <script type="text/javascript" src="{{ asset ('theme/js/wow.min.js') }}" ></script>
+    <script type="text/javascript" src= "{{ asset ('theme/js/main.js') }}"></script>
+</body>
 
-    <!-- Prochaines Collectes Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 800px;">
-                <h4 class="text-primary text-uppercase border-bottom border-primary border-2 d-inline-block p-2">
-                    Prochaines Collectes
-                </h4>
-                <h1 class="display-5 mb-4">Participez à une Collecte Près de Chez Vous</h1>
-            </div>
-
-            <div class="row g-4">
-                {% for collecte in collectes_list %}
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-header bg-primary text-white text-center py-3">
-                            <h5 class="mb-0">{{ collecte.nom }}</h5>
-                        </div>
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-calendar text-primary me-2"></i>
-                                <span>{{ collecte.dateDebut|date('d/m/Y H:i') }}</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-clock text-primary me-2"></i>
-                                <span>Fin: {{ collecte.dateFin|date('H:i') }}</span>
-                            </div>
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                                <span>{{ collecte.lieu.nomLieu ?? 'Lieu non spécifié' }}</span>
-                            </div>
-                            <p class="text-muted">Capacité: {{ collecte.capaciteMaximale }} personnes</p>
-                        </div>
-                        <div class="card-footer bg-transparent text-center">
-                            <a href="#" class="btn btn-outline-primary rounded-pill px-4">
-                                <i class="fas fa-info-circle me-2"></i>Plus d'infos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% else %}
-                <div class="col-12 text-center">
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i>Aucune collecte prévue pour le moment.
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <!-- Prochaines Collectes End -->
-
-    <!-- Urgence Stocks Start -->
-    {% if stocks is defined and stocks is not empty %}
-    <div class="container-fluid bg-light py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 800px;">
-                <h4 class="text-danger text-uppercase border-bottom border-danger border-2 d-inline-block p-2">
-                    Niveaux d'Urgence
-                </h4>
-                <h1 class="display-5 mb-4">État des Stocks de Sang</h1>
-            </div>
-
-            <div class="row g-4">
-                {% for stock in stocks %}
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="stock-item text-center p-4 border rounded bg-white">
-                        <div class="blood-group mb-3">
-                            <span class="display-6 fw-bold text-danger">{{ stock.groupeSanguin }}</span>
-                        </div>
-                        
-                        {% set niveau = (stock.quantite / stock.seuilUrgence * 100)|round %}
-                        {% if niveau >= 70 %}
-                            {% set color = 'bg-success' %}
-                            {% set statut = 'Bon niveau' %}
-                        {% elseif niveau >= 30 %}
-                            {% set color = 'bg-warning' %}
-                            {% set statut = 'Niveau moyen' %}
-                        {% else %}
-                            {% set color = 'bg-danger' %}
-                            {% set statut = 'Niveau critique' %}
-                        {% endif %}
-                        
-                        <div class="progress mb-3" style="height: 20px;">
-                            <div class="progress-bar {{ color }}" style="width: {{ niveau }}%">
-                                <span class="fw-bold">{{ niveau }}%</span>
-                            </div>
-                        </div>
-                        
-                        <p class="mb-2"><strong>{{ stock.quantite }}</strong> unités disponibles</p>
-                        <small class="text-muted">Seuil d'urgence: {{ stock.seuilUrgence }}</small>
-                        <div class="mt-2">
-                            <span class="badge {{ color == 'bg-danger' ? 'bg-danger' : (color == 'bg-warning' ? 'bg-warning' : 'bg-success') }}">
-                                {{ statut }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="text-center mt-5">
-                <a href="" class="btn btn-danger rounded-pill px-5 py-3">
-                    <i class="fas fa-chart-bar me-2"></i>Baromètre Complet
-                </a>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-    <!-- Urgence Stocks End -->
-
-    <!-- Call to Action -->
-    <div class="container-fluid bg-primary text-white py-5">
-        <div class="container text-center">
-            <h2 class="display-5 mb-4">Prêt à Sauver des Vies ?</h2>
-            <p class="mb-4">Inscrivez-vous dès maintenant et rejoignez notre communauté de donateurs.</p>
-            <a href="" class="btn btn-light rounded-pill py-3 px-5">
-                <i class="fas fa-heart me-2"></i>Devenir Donateur
-            </a>
-        </div>
-    </div>
-{% endblock %}
+</html>

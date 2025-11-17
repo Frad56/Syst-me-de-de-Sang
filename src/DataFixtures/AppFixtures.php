@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
         $GroupeSanguinPossible = ['A+', 'A-',' B+',' B-', 'AB+', 'AB-', 'O+',' O-'];
         $GroupeSanguin =[];
 
-        $rolesDisponibles = ['ROLE_DONATEUR', 'ROLE_ADMIN'];
+        $rolesDisponibles = ['ROLE_DONATEUR'];
         $typeDonListe = ['Sangtotal','plasma','plaquettes'];
 
         $collecteStatut =['lanifiée','Terminée'];
@@ -96,7 +96,8 @@ class AppFixtures extends Fixture
         $donateur->setDerniereDateDon($faker->dateTime);
         
         //role de donateur
-        $donateur->setRole($faker->randomElement($rolesDisponibles));
+      
+
 
 /*    **************************     Collect      ******************************** */
 
@@ -150,17 +151,19 @@ class AppFixtures extends Fixture
 
       $stock->setGroupeSanguin($faker->randomElement( $GroupeSanguinPossible));
 
-     $stock->setNiveauActuel($faker->randomElement([
-        'Faible',
-        'Moyen',
-        'Élevé'
-    ]));
-    $stock->setNiveauAlerte($faker->randomElement([
-        'Normal',
-        'Alerte',
-        'Critique'
+     // Générer un niveau actuel aléatoire entre 0.5 et 5 litres
+    $niveauActuel = $faker->randomFloat(1, 0.5, 5);
+    $stock->setNiveauActuel($niveauActuel);
 
-    ]));
+      // Déterminer automatiquement le niveau d'alerte
+      if ($niveauActuel <= 1.5) {
+          $stock->setNiveauAlerte("Critique");
+      } elseif ($niveauActuel < 3) {
+          $stock->setNiveauAlerte("Alerte");
+      } else {
+          $stock->setNiveauAlerte("Normal");
+      }
+
     $manager->persist($lieu);
     $manager->persist($collecte);
     $manager->persist($rendezVous);

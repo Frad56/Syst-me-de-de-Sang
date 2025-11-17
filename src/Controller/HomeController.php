@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Donateur;
+use App\Form\DonateurType;
 use App\Repository\CollecteRepository;
 use App\Repository\DonateurRepository;
+use App\Repository\LieuRepository;
 use App\Repository\StockRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 final class HomeController extends AbstractController
 {
 
@@ -37,8 +41,43 @@ final class HomeController extends AbstractController
             'stock' => $stock,
         ]);
     }
+   
+    #[Route('/register', name:'app_new_donateur')]
+    public function AddDonateur(Request $request ,DonateurRepository $donateur_repository,EntityManagerInterface $entityManager,LieuRepository $lieuRepository):Response
+    {
+        $donateur = new Donateur();
+        $form = $this->createForm(DonateurType::class,$donateur);
+        $form->handleRequest($request);
+        //verfier que il est de type Poste
+        if($form->isSubmitted() && $form->isValid()){
+            $entityManager->persist($donateur);
+            $entityManager->flush();
+            //redirection
+            return $this->redirectToRoute('app_collectes');
+        }
 
-    
+        $lieux= $lieuRepository->findAll();
+        return $this->render('home/NewDonnateur.html.twig',[
+            'DonateurForm' => $form->createView(),
+            'lieux' => $lieux,
+        ]);
+
+    }
+ 
+    #[Route('/stock', name: 'app_stock')]
+    public function stock(StockRepository $stockRepository): Response
+    {
+     
+        $stock= $stockRepository->findAll();
+     
+
+        return $this->render('home/stock.html.twig', [
+            'stock' => $stock,
+        ]);
+    }
+ 
+   
+ 
 
    
 }

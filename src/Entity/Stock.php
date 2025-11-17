@@ -17,8 +17,8 @@ class Stock
     #[ORM\Column(length: 40)]
     private ?string $groupeSanguin = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $niveauActuel = null;
+   #[ORM\Column(type: Types::INTEGER)]
+    private ?int $niveauActuel = null;
 
     #[ORM\Column(length: 30)]
     private ?string $niveauAlerte = null;
@@ -43,12 +43,12 @@ class Stock
         return $this;
     }
 
-    public function getNiveauActuel(): ?string
+    public function getNiveauActuel(): ?int
     {
         return $this->niveauActuel;
     }
 
-    public function setNiveauActuel(string $niveauActuel): static
+    public function setNiveauActuel(int $niveauActuel): static
     {
         $this->niveauActuel = $niveauActuel;
 
