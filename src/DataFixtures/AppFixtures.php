@@ -76,17 +76,15 @@ class AppFixtures extends Fixture
 
         //**************      Donateur       ***************************** */
          //email
-         $composerEmail =  $faker->sentence();
-         $composerEmail = substr($composerEmail,0,8);
-         $composerEmail .='@gmail.com';
+         $composerEmail = $faker->unique()->userName() . '@gmail.com';
           $donateur->setEmail($composerEmail);
         //prenom
          $donateur->setPrenom($faker->lastName());
 
         //password
-        $plainPassword = $faker->password(5, 7); // 
+        // 
         //transfer d'une mot claire a une autre hache pour des raison de securites
-        $hashedPassword = $this->passwordHasher->hashPassword($donateur, $plainPassword);
+        $hashedPassword = $this->passwordHasher->hashPassword($donateur, 'user123');
         $donateur->setPassword($hashedPassword);
 
         //groupe Sanguin 

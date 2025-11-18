@@ -6,9 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use App\Entity\Donateur;
-use Symfony\Component\HttpFoundation\Request;
-
 
 class SecurityController extends AbstractController
 {
@@ -20,27 +17,28 @@ class SecurityController extends AbstractController
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-    
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
-
-    
-
-    #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(): Response
+        #[Route('/dashboard', name: 'app_dashboard')]
+    public function dashboard(): Response
     {
-        $user = $this->getUser();
-
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
+        if ($this->isGranted('ROLE_ADMINISTRATEUR')) {
+            return $this->render('admin/dashboard.html.twig');
         }
-        return $this->render('dashboard/index.html.twig',
-        ['user' => $user,
-        ]);
+    
+        if ($this->isGranted('ROLE_DONATEUR')) {
+            return $this->render('donateur/dashboard.html.twig');
+        }
+    
+        // Si aucun rôle reconnu
+        return $this->redirectToRoute('app_login');
     }
+    
+    
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
