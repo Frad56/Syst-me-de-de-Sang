@@ -48,12 +48,12 @@ class Donateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, RendezVous>
      */
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'donateur')]
-    private Collection $rendezVouse;
+    private Collection $rendezVous;
 
     public function __construct()
     {
         $this->dons = new ArrayCollection();
-        $this->rendezVouse = new ArrayCollection();
+        $this->rendezVous = new ArrayCollection();
     }
 
     public function getUserIdentifier(): string
@@ -170,23 +170,23 @@ class Donateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRendezVouses(): Collection
     {
-        return $this->rendezVouse;
+        return $this->rendezVous;
     }
 
     public function addRendezVouse(RendezVous $rendezVouse): static
     {
-        if (!$this->rendezVouse->contains($rendezVouse)) {
-            $this->rendezVouse->add($rendezVouse);
+        if (!$this->rendezVous->contains($rendezVouse)) {
+            $this->rendezVous->add($rendezVouse);
             $rendezVouse->setDonateur($this);
         }
         return $this;
     }
 
-    public function removeRendezVouse(RendezVous $rendezVouse): static
+    public function removeRendezVouse(RendezVous $rendezVous): static
     {
-        if ($this->rendezVouse->removeElement($rendezVouse)) {
-            if ($rendezVouse->getDonateur() === $this) {
-                $rendezVouse->setDonateur(null);
+        if ($this->rendezVous->removeElement($rendezVous)) {
+            if ($rendezVous->getDonateur() === $this) {
+                $rendezVous->setDonateur(null);
             }
         }
         return $this;

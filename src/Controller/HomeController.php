@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 final class HomeController extends AbstractController
 {
 
@@ -43,13 +45,19 @@ final class HomeController extends AbstractController
     }
    
     #[Route('/register', name:'app_new_donateur')]
-    public function AddDonateur(Request $request ,DonateurRepository $donateur_repository,EntityManagerInterface $entityManager,LieuRepository $lieuRepository):Response
+    public function AddDonateur(Request $request ,
+    EntityManagerInterface $entityManager,
+    LieuRepository $lieuRepository, 
+    UserPasswordHasherInterface $passwordHasher):Response
     {
         $donateur = new Donateur();
         $form = $this->createForm(DonateurType::class,$donateur);
         $form->handleRequest($request);
         //verfier que il est de type Poste
         if($form->isSubmitted() && $form->isValid()){
+            $plainPassword = $form->get('password')->getData();
+            $hashedPassword = $passwordHasher->hashPassword($donateur, $plainPassword);
+            $donateur->setPassword($hashedPassword);
             $entityManager->persist($donateur);
             $entityManager->flush();
             //redirection
